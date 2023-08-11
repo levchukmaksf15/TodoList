@@ -5,6 +5,33 @@
     <title>All ToDo lists of User</title>
 </head>
 <body>
-
+<body>
+    <h1 th:text="'ToDo Lists of ' + ${todos[0].owner.firstName + ' ' + todos[0].owner.lastName}"></h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Collaborators</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="todo : ${todos}">
+            <td th:text="${todo.id}"></td>
+            <td><a th:href="@{/todos/create/users/{owner_id}(owner_id=${todo.id})}" th:text="${todo.title}"></a></td>
+            <td>
+                <ul>
+                    <li th:each="collaborator : ${todo.collaborators}">
+                        <span th:text="${collaborator.firstName + ' ' + collaborator.lastName}"></span>
+                    </li>
+                </ul>
+            </td>
+            <td th:text="${todo.createdAt}"></td>
+            <td>
+                <a th:href="@{/editTodo/{id}(id=${todo.id})}">Edit</a>
+                <a th:href="@{/deleteTodo/{id}(id=${todo.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/todos/create/users/{owner_id}(owner_id=${todos[0].owner.id})}">Create New ToDo</a>
 </body>
 </html>
