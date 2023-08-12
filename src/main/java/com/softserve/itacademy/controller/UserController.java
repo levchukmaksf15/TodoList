@@ -1,48 +1,67 @@
 package com.softserve.itacademy.controller;
 
+import com.softserve.itacademy.model.User;
+import com.softserve.itacademy.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
-    //add needed fields
+    private final UserService userService;
 
-//    @GetMapping("/create")
-//    public String create(//add needed parameters) {
-//        //ToDo
-//        return " ";
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/create")
+    public String showCreateUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "createUserForm";
+    }
+
+    @PostMapping("/create")
+    public String createUser(@ModelAttribute("user") User user) {
+        userService.create(user);
+        return "redirect:/users/all";
+    }
+
+    @GetMapping("/{id}/read")
+    public String readUser(@PathVariable Long id, Model model) {
+        User user = userService.readById(id);
+        model.addAttribute("user", user);
+        return "readUser";
+    }
+
+    @GetMapping("/{id}/update")
+    public String showUpdateUserForm(@PathVariable Long id, Model model) {
+        User user = userService.readById(id);
+        model.addAttribute("user", user);
+        return "updateUserForm";
+    }
+
+//    @PostMapping("/{id}/update")
+//    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
+//        userService.update(id, user);
+//        return "redirect:/users/all";
 //    }
-//
-//    @PostMapping("/create")
-//    public String create(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//    @GetMapping("/{id}/read")
-//    public String read(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//    @GetMapping("/{id}/update")
-//    public String update(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//
-//    @GetMapping("/{id}/delete")
-//    public String delete(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//    @GetMapping("/all")
-//    public String getAll(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+        return "redirect:/users/all";
+    }
+
+    @GetMapping("/all")
+    public String getAllUsers(Model model) {
+        List<User> users = userService.getAll();
+        model.addAttribute("users", users);
+        return "allUsers";
+    }
 }

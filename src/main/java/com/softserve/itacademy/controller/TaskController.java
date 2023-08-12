@@ -1,5 +1,6 @@
 package com.softserve.itacademy.controller;
 
+
 import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.service.StateService;
 import com.softserve.itacademy.service.TaskService;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
+    private final TaskService taskService;
+    private final ToDoService todoService;
+    private final StateService stateService;
 
     TaskService taskService;
     ToDoService toDoService;
@@ -21,6 +25,7 @@ public class TaskController {
     public TaskController(TaskService taskService, ToDoService toDoService, StateService stateService) {
         this.taskService = taskService;
         this.toDoService = toDoService;
+
         this.stateService = stateService;
     }
 
