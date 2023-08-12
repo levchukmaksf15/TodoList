@@ -1,25 +1,30 @@
 package com.softserve.itacademy.service.impl;
 
 import com.softserve.itacademy.model.Task;
+import com.softserve.itacademy.repository.StateRepository;
 import com.softserve.itacademy.repository.TaskRepository;
 import com.softserve.itacademy.service.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
+    private StateRepository stateRepository;
 
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, StateRepository stateRepository) {
         this.taskRepository = taskRepository;
+        this.stateRepository = stateRepository;
     }
 
     @Override
-    public Task create(Task user) {
-            return taskRepository.save(user);
+    public Task create(Task task) {
+        task.setState(stateRepository.getByName("New"));
+        return taskRepository.save(task);
     }
 
     @Override
@@ -30,8 +35,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task update(Task task) {
-            Task oldTask = readById(task.getId());
-                return taskRepository.save(task);
+            if (!taskRepository.existsById(task.getId())) {
+                throw new NoSuchElementException();
+            }
+            return taskRepository.save(task);
     }
 
     @Override

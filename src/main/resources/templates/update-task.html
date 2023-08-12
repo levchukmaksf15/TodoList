@@ -5,6 +5,40 @@
     <title>Update Task</title>
 </head>
 <body>
-
+<h1>Update Task</h1>
+<form th:action="@{'/tasks/' + ${task_id} + '/update/todos/' + ${todo_id}}"  th:object="${task}" method="post">
+    <div>
+        <label for="taskId" class="form-label">Id</label>
+        <input type="text" id="taskId" readonly="readonly" th:field="*{id}"/>
+    </div>
+    <div>
+        <label for="taskNameInput" class="form-label">Name</label>
+        <input type="text" id="taskNameInput" th:field="*{name}"/>
+    </div>
+    <div>
+        <label for="taskPriorityDrop-down" class="form-label">Priority</label>
+        <select name="Priority" id="taskPriorityDrop-down" th:field="*{priority}">
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+        </select>
+    </div>
+    <div>
+        <label for="taskStateDrop-down" class="form-label">State</label>
+        <select name="Priority" id="taskStateDrop-down" th:field="*{state.name}">
+            <option value="New">Low</option>
+            <option value="Doing">Doing</option>
+            <option value="Verify">Verify</option>
+            <option value="Done">Done</option>
+        </select>
+    </div>
+    <div>
+        <p><input type="submit" value="Update task"/>
+            <input type="reset" value="Clear"/></p>
+    </div>
+</form>
+<div>
+    <p><a th:href="@{'/todos/' + ${todo_id} + '/tasks'}">Go to tasks list</a></p>
+</div>
 </body>
 </html>
