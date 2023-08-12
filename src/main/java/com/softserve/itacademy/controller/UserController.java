@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/update")
-    public String showUpdateUserForm(@PathVariable Long id, Model model) {
+    public String updateUser(@PathVariable Long id, Model model) {
         User user = userService.readById(id);
         model.addAttribute("user", user);
         return "update-user";
@@ -48,22 +48,8 @@ public class UserController {
 
     @PostMapping("/{id}/update")
     public String updateUser(@PathVariable Long id, @ModelAttribute("user") User updatedUser) {
-        User existingUser = userService.readById(id);
-
-        if (existingUser == null) {
-            // Обробка випадку, коли користувача не знайдено
-            return "redirect:/home";
-        }
-
-        // Оновлення даних користувача
-        existingUser.setFirstName(updatedUser.getFirstName());
-        existingUser.setLastName(updatedUser.getLastName());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setPassword(updatedUser.getPassword());
-
-        userService.update(existingUser);
-
-        return "redirect:home";
+        userService.update(updatedUser); 
+        return "redirect:/home";
     }
 
 
