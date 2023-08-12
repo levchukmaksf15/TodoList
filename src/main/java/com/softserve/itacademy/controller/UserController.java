@@ -36,7 +36,7 @@ public class UserController {
     public String readUser(@PathVariable Long id, Model model) {
         User user = userService.readById(id);
         model.addAttribute("user", user);
-        return "readUser";
+        return "redirect:/user-info";
     }
 
     @GetMapping("/{id}/update")
@@ -46,22 +46,37 @@ public class UserController {
         return "update-user";
     }
 
-//    @PostMapping("/{id}/update")
-//    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
-//        userService.update(id, user);
-//        return "redirect:/users/all";
-//    }
+    @PostMapping("/{id}/update")
+    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User updatedUser) {
+        User existingUser = userService.readById(id);
 
-    @GetMapping("/{id}/delete")
+        if (existingUser == null) {
+            // Обробка випадку, коли користувача не знайдено
+            return "redirect:/home";
+        }
+
+        // Оновлення даних користувача
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPassword(updatedUser.getPassword());
+
+        userService.update(existingUser);
+
+        return "redirect:home";
+    }
+
+
+@GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/all")
     public String getAllUsers(Model model) {
         List<User> users = userService.getAll();
         model.addAttribute("users", users);
-        return "allUsers";
+        return "/home";
     }
 }
