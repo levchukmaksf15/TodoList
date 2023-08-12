@@ -20,11 +20,11 @@
             <td th:text="${task.priority}"></td>
             <td th:text="${task.state.name}"></td>
             <td>
-                <a th:href="@{/editTask/{id}(id=${task.id})}">Edit</a>
-                <a th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a>
+                <a th:href="@{/tasks/{task_id}/update/todos/{todo_id}(task_id=${task.id},todo_id=${todoId})}">Edit</a>
+                <a th:href="@{/tasks/{task_id}/delete/todos/{todo_id}(task_id=${task.id},todo_id=${todoId})}">Delete</a>
             </td>
         </tr>
     </table>
-    <a th:href="@{/createTask/users/{ownerId}(ownerId=${todoId})}">Create New Task</a>
+    <a th:href="@{/tasks/create/todos/{todo_id}(todo_id=${todoId})}">Create New Task</a>
 </body>
 </html>
