@@ -22,4 +22,5 @@ public class HomeController {
         model.addAttribute("users", users);
         return "home";
     }
+
 }

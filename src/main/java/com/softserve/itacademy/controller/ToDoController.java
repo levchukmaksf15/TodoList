@@ -2,7 +2,6 @@ package com.softserve.itacademy.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.model.ToDo;
 import com.softserve.itacademy.model.User;
+
+import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 import com.softserve.itacademy.service.UserService;
 
@@ -29,6 +30,9 @@ public class ToDoController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private TaskService taskService;
     
     @GetMapping("/create/users/{owner_id}")
     public String create(@PathVariable("owner_id") Long ownerId, Model model) {
@@ -51,50 +55,52 @@ public class ToDoController {
             todo.setTasks(tasks);
 
             toDoService.create(todo);
-        return "redirect:/";
+        return "redirect:/todos/all/users/"+ownerId;
     }
-/*
+
     @GetMapping("/{id}/tasks")
-    public String read(//add needed parameters) {
-        //ToDo
-        return " ";
+    public String read(@PathVariable("id") Long todoId, Model model) {
+        List<Task> tasks = taskService.getByTodoId(todoId);
+        model.addAttribute("tasks", tasks);
+        return "todo-tasks";
     }
 
     @GetMapping("/{todo_id}/update/users/{owner_id}")
-    public String update(//add needed parameters) {
-        //ToDo
-        return " ";
+    public String update(@PathVariable("todo_id") Long toDoId, @PathVariable("owner_id") Long ownerId, Model model) {
+        ToDo todo = toDoService.readById(toDoId);
+        model.addAttribute("todo", todo);
+        return "update-todo";
     }
 
     @PostMapping("/{todo_id}/update/users/{owner_id}")
-    public String update(//add needed parameters) {
-        //ToDo
-        return " ";
+    public String update( @PathVariable("owner_id") Long ownerId,@ModelAttribute ToDo todo) {
+        toDoService.update(todo);
+        return "redirect:/todos/all/users/"+ownerId;
     }
 
     @GetMapping("/{todo_id}/delete/users/{owner_id}")
-    public String delete(//add needed parameters) {
-                         // ToDo
-        return " ";
+    public String delete(@PathVariable("todo_id") Long toDoId, @PathVariable("owner_id") Long ownerId, Model model) {
+        toDoService.delete(toDoId)   ;             
+        return "redirect:/todos/all/users/"+ownerId;
     }
-*/
+
     @GetMapping("/all/users/{user_id}")
     public String getAll(@PathVariable("user_id") Long userId, Model model) {
         List<ToDo> todos = toDoService.getByUserId(userId);
         model.addAttribute("todos", todos);
         return "todos-user";
     }
-/*
+
     @GetMapping("/{id}/add")
-    public String addCollaborator(//add needed parameters) {
-        //ToDo
-        return " ";
+    public String addCollaborator(@PathVariable("id") Long toDoId, Model model) {
+
+        return "ChangeCollaborators";
     }
 
     @GetMapping("/{id}/remove")
-    public String removeCollaborator(//add needed parameters) {
-        //ToDo
-        return " ";
+    public String removeCollaborator(@PathVariable("id") Long toDoId, Model model) {
+        
+        return "redirect:/todos";
     }
-    */
+  
 }

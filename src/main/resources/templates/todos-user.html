@@ -17,7 +17,7 @@
         </tr>
         <tr th:each="todo : ${todos}">
             <td th:text="${todo.id}"></td>
-            <td><a th:href="@{/todos/create/users/{owner_id}(owner_id=${todo.id})}" th:text="${todo.title}"></a></td>
+            <td><a th:href="@{/todos/{id}/tasks(id=${todo.id})}" th:text="${todo.title}"></a></td>
             <td>
                 <ul>
                     <li th:each="collaborator : ${todo.collaborators}">
@@ -27,8 +27,8 @@
             </td>
             <td th:text="${todo.createdAt}"></td>
             <td>
-                <a th:href="@{/editTodo/{id}(id=${todo.id})}">Edit</a>
-                <a th:href="@{/deleteTodo/{id}(id=${todo.id})}">Delete</a>
+                <a th:href="@{/todos/{todo_id}/update/users/{owner_id}(todo_id=${todo.id},owner_id=${todos[0].owner.id})}">Edit</a>
+                <a th:href="@{/todos/{todo_id}/delete/users/{owner_id}(todo_id=${todo.id},owner_id=${todos[0].owner.id})}">Delete</a>
             </td>
         </tr>
     </table>

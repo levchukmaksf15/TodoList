@@ -5,6 +5,26 @@
     <title>All Tasks of ToDo List</title>
 </head>
 <body>
-
+    <h1>All Tasks of ToDo List</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Priority</th>
+            <th>State</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.priority}"></td>
+            <td th:text="${task.state.name}"></td>
+            <td>
+                <a th:href="@{/editTask/{id}(id=${task.id})}">Edit</a>
+                <a th:href="@{/deleteTask/{id}(id=${task.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/createTask/users/{ownerId}(ownerId=${tasks[0].todo.owner.id})}">Create New Task</a>
 </body>
 </html>
