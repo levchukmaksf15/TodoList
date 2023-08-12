@@ -97,16 +97,32 @@ public class ToDoController {
         return "todos-user";
     }
 
-    @GetMapping("/{id}/add")
-    public String addCollaborator(@PathVariable("id") Long toDoId, Model model) {
-
-        return "ChangeCollaborators";
+    @GetMapping("/{todo_id}/add/{user_id}")
+    public String addCollaborator(@PathVariable("todo_id") Long todoId, @PathVariable("user_id") Long userId) {
+        ToDo todo = toDoService.readById(todoId);
+        User collaborator = userService.readById(userId);
+        
+        List<User> collaborators = todo.getCollaborators();
+        collaborators.add(collaborator);
+        
+        todo.setCollaborators(collaborators);
+        toDoService.update(todo);
+        
+        return "redirect:/todos/"+ todoId +"/update/users/" + userId ;
     }
 
-    @GetMapping("/{id}/remove")
-    public String removeCollaborator(@PathVariable("id") Long toDoId, Model model) {
+    @GetMapping("/{todo_id}/remove/{user_id}")
+    public String removeCollaborator(@PathVariable("todo_id") Long todoId, @PathVariable("user_id") Long userId) {
+        ToDo todo = toDoService.readById(todoId);
+        User collaborator = userService.readById(userId);
         
-        return "redirect:/todos";
+        List<User> collaborators = todo.getCollaborators();
+        collaborators.remove(collaborator);
+        
+        todo.setCollaborators(collaborators);
+        toDoService.update(todo);
+        
+        return "redirect:/todos/"+ todoId +"/update/users/" + userId;
     }
   
 }
