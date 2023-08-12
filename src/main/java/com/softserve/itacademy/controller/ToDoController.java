@@ -69,14 +69,17 @@ public class ToDoController {
     @GetMapping("/{todo_id}/update/users/{owner_id}")
     public String update(@PathVariable("todo_id") Long toDoId, @PathVariable("owner_id") Long ownerId, Model model) {
         ToDo todo = toDoService.readById(toDoId);
-        List<User> user = userService.getAll();
+        User owner = userService.readById(ownerId);
+        List<User> users = userService.getAll();
         model.addAttribute("todo", todo);
-        model.addAttribute("todo", todo);
+        model.addAttribute("users", users);
+        model.addAttribute("owner", owner);
         return "update-todo";
     }
 
     @PostMapping("/{todo_id}/update/users/{owner_id}")
-    public String update( @PathVariable("owner_id") Long ownerId,@ModelAttribute ToDo todo) {
+    public String update( @PathVariable("owner_id") Long ownerId, @ModelAttribute ToDo todo) {
+        todo.setCreatedAt(LocalDateTime.now());
         toDoService.update(todo);
         return "redirect:/todos/all/users/"+ownerId;
     }
