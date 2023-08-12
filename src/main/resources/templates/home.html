@@ -18,11 +18,11 @@
             <td><a th:href="@{/todos/all/users/{user_id}(user_id=${user.id})}" th:text="${user.firstName + ' ' + user.lastName}"></a></td>
             <td th:text="${user.email}"></td>
             <td>
-                <a th:href="@{/edit/{id}(id=${user.id})}">Edit</a>
-                <a th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
+                <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
+                <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
             </td>
         </tr>
     </table>
-    <a th:href="@{/create}">Create New User</a>
+    <a th:href="@{/users/create}">Create New User</a>
 </body>
 </html>

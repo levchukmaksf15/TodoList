@@ -13,21 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
-    private final TaskService taskService;
-    private final ToDoService todoService;
-    private final StateService stateService;
-
-    TaskService taskService;
-    ToDoService toDoService;
-    StateService stateService;
-
+    
     @Autowired
-    public TaskController(TaskService taskService, ToDoService toDoService, StateService stateService) {
-        this.taskService = taskService;
-        this.toDoService = toDoService;
-
-        this.stateService = stateService;
-    }
+    private TaskService taskService;
+    @Autowired
+    private ToDoService toDoService;
+    @Autowired
+    private StateService stateService;
 
     @GetMapping("/create/todos/{todo_id}")
     public String saveTask(@PathVariable Integer todo_id, Model model) {

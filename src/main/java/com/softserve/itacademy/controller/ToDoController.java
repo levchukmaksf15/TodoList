@@ -62,12 +62,15 @@ public class ToDoController {
     public String read(@PathVariable("id") Long todoId, Model model) {
         List<Task> tasks = taskService.getByTodoId(todoId);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("todoId",todoId);
         return "todo-tasks";
     }
 
     @GetMapping("/{todo_id}/update/users/{owner_id}")
     public String update(@PathVariable("todo_id") Long toDoId, @PathVariable("owner_id") Long ownerId, Model model) {
         ToDo todo = toDoService.readById(toDoId);
+        List<User> user = userService.getAll();
+        model.addAttribute("todo", todo);
         model.addAttribute("todo", todo);
         return "update-todo";
     }
