@@ -1,5 +1,6 @@
 package com.softserve.itacademy.controller;
 
+import com.softserve.itacademy.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,7 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class UserController {
 
-    //add needed fields
+        private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 //    @GetMapping("/create")
 //    public String create(//add needed parameters) {
