@@ -5,6 +5,36 @@
     <title>Update existing To-Do</title>
 </head>
 <body>
-
+    <h1>Update existing To-Do</h1>
+    <form th:action="@{/todos/{todo_id}/update/users/{owner_id}(todo_id=${todo.id}, ownerId=${todo.owner.id})}" method="post" th:object="${todo}">
+        
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" th:value="${todo.id}" readonly="readonly">
+        
+        
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" th:field="*{title}">
+        
+        
+        <label for="createdAt">Created At:</label>
+        <input type="text" id="createdAt" name="createdAt" th:value="${todo.createdAt}" readonly="readonly">
+        
+        
+        <label for="owner">Owner:</label>
+        <select id="owner" name="owner.id" th:field="*{owner.id}">
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName + ' ' + user.lastName}"></option>
+        </select>
+        
+        
+        <label for="collaborators">Collaborators:</label>
+        <select id="collaborators" name="collaborators" th:field="*{collaborators}" multiple="multiple">
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName + ' ' + user.lastName}"></option>
+        </select>
+        <br>
+        
+        <button type="submit">Update</button>
+    </form>
+    
+    <a th:href="@{/todos/all/users/{ownerId}(ownerId=${todo.owner.id})}">Back to ToDo Lists</a>
 </body>
 </html>
