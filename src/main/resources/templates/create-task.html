@@ -5,7 +5,7 @@
     <title>Create New Task</title>
 </head>
 <body>
-
+<header th:replace="fragment/headerr :: header"></header>
 <h1>Add Task</h1>
 <form th:action="@{/tasks/create/todos/{todo_id}(todo_id=${todo_id})}"  th:object="${task}" method="post">
     <label for="taskNameInput" class="form-label">Name</label>

@@ -5,6 +5,7 @@
     <title>Update Task</title>
 </head>
 <body>
+<header th:replace="fragment/headerr :: header"></header>
 <h1>Update Task</h1>
 <form th:action="@{'/tasks/' + ${task_id} + '/update/todos/' + ${todo_id}}"  th:object="${task}" method="post">
     <div>
