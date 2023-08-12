@@ -21,15 +21,15 @@ public class UserController {
     }
 
     @GetMapping("/create")
-    public String showCreateUserForm(Model model) {
+    public String createUser(Model model) {
         model.addAttribute("user", new User());
-        return "createUserForm";
+        return "create-user";
     }
 
     @PostMapping("/create")
     public String createUser(@ModelAttribute("user") User user) {
         userService.create(user);
-        return "redirect:/users/all";
+        return "redirect:/";
     }
 
     @GetMapping("/{id}/read")
@@ -43,7 +43,7 @@ public class UserController {
     public String showUpdateUserForm(@PathVariable Long id, Model model) {
         User user = userService.readById(id);
         model.addAttribute("user", user);
-        return "updateUserForm";
+        return "update-user";
     }
 
 //    @PostMapping("/{id}/update")
@@ -55,7 +55,7 @@ public class UserController {
     @GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return "redirect:/users/all";
+        return "redirect:/";
     }
 
     @GetMapping("/all")

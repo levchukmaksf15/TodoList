@@ -18,7 +18,7 @@
             <td><a th:href="@{/todos/all/users/{user_id}(user_id=${user.id})}" th:text="${user.firstName + ' ' + user.lastName}"></a></td>
             <td th:text="${user.email}"></td>
             <td>
-                <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
+                <a th:href="@{/users/{id}/update(id=${user.id})}">Edit</a>
                 <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
             </td>
         </tr>
