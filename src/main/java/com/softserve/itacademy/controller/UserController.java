@@ -46,11 +46,11 @@ public class UserController {
         return "updateUserForm";
     }
 
-    @PostMapping("/{id}/update")
-    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
-        userService.update(id, user);
-        return "redirect:/users/all";
-    }
+//    @PostMapping("/{id}/update")
+//    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
+//        userService.update(id, user);
+//        return "redirect:/users/all";
+//    }
 
     @GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
